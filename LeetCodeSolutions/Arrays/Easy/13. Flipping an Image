@@ -1,0 +1,37 @@
+Question link : https://leetcode.com/problems/flipping-an-image/
+
+Solution:  
+class Solution {
+    
+    public void reverse(int[][] image){  
+        for(int i = 0 ; i < image.length ; ++i){ //each row
+            int start  = 0  ;  //reverse each row
+            int end = image[i].length -1 ; 
+            while(start < end){
+                int temp = image[i][start] ; 
+                image[i][start] = image[i][end] ; 
+                image[i][end] = temp ; 
+                ++start ; 
+                --end ; 
+            }
+        }
+    }
+    
+    public void invert(int[][] image){ //ivert 1 to 0  , 0 to 1
+        for(int i = 0 ; i < image.length ; ++i){
+            for(int j = 0 ; j < image[i].length ; ++j){
+                if(image[i][j] == 1){
+                    image[i][j] = 0 ; 
+                }else{
+                    image[i][j] = 1 ; 
+                } 
+            }
+        }
+    }
+    
+    public int[][] flipAndInvertImage(int[][] image) {
+        reverse(image) ; 
+        invert(image) ; 
+        return image ; 
+    }
+}
