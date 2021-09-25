@@ -1,0 +1,35 @@
+Question link : https://leetcode.com/problems/cells-with-odd-values-in-a-matrix/
+
+Solution : 
+class Solution {
+    
+    public void increment(int[][] matrix , int row , int col){
+        //incrementing all cells on row row
+        for(int i = 0 ; i < matrix[row].length ; ++i){
+            ++matrix[row][i] ; 
+        }
+        
+        //increment all cells on column column
+        for(int i = 0 ; i < matrix.length ; ++i){
+            ++matrix[i][col] ; 
+        }
+    }
+    
+    public int oddCells(int m, int n, int[][] indices) {
+        int[][] matrix = new int[m][n] ; 
+        for(int i = 0 ; i < indices.length ; ++i){
+            increment(matrix , indices[i][0] , indices[i][1]) ; //pass the matrix . indices row val , indices col val to increment in the matrix
+        }
+        
+        int ctr = 0 ; 
+        for(int i = 0 ; i < matrix.length ; ++i){
+            for(int j = 0 ; j < matrix[i].length ; ++j){
+                if(matrix[i][j] % 2 == 1){
+                    ++ctr ; 
+                }
+            }
+        }
+        
+        return ctr ; 
+    }
+}
