@@ -1,0 +1,28 @@
+Question link: https://leetcode.com/problems/count-items-matching-a-rule/
+
+Solution : 
+class Solution {
+    public int countMatches(List<List<String>> items, String ruleKey, String ruleValue) {
+        int ctr = 0 ; 
+        int rule = 0 ;
+        
+        //NOTICE .equals is used not == to compare the string as .equals does not care about where is stored , it returns true or false based on the value of the string only
+        //given the order is type (index 0)  , color(index1) ,  name(index2)
+        if(ruleKey.equals("type")){
+            rule = 0 ; 
+        }else if(ruleKey.equals("color")){
+            rule = 1 ; 
+        }
+        if(ruleKey.equals("name")){
+            rule = 2 ; 
+        }
+        
+        for(List innerList : items){ //iterate each of the inner list (for each loop)
+            if(innerList.get(rule).equals(ruleValue)){ //use innerList.get(rule) i.e the index we need according to ruleKey and compare it with rule value
+                ++ctr ; 
+            }
+        }
+        
+        return ctr ; 
+    }
+}
