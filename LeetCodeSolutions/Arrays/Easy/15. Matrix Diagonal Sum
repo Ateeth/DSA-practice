@@ -1,0 +1,28 @@
+Question link : https://leetcode.com/problems/matrix-diagonal-sum/
+
+Solution : 
+class Solution {
+    public int diagonalSum(int[][] mat) {
+        int sum = 0 ; 
+        
+        //caluclate the sum of primary diagonal
+        for(int i = 0 ; i < mat.length ; ++i){
+            for(int j = 0 ; j < mat[i].length ; ++j){
+                if(i==j){ //condition for primary diagonal
+                    sum += mat[i][j] ; 
+                }
+            }
+        }
+        
+        //calculate sum for secondary diagonal
+         for(int i = 0 ; i < mat.length ; ++i){
+            for(int j = 0 ; j < mat[i].length ; ++j){
+                if((i+j == mat.length-1) && (i!=j)){ //condition for secondary diagonal other than the element where i==j and i+j == n-1 as we alsdready considered it before
+                    sum += mat[i][j] ;
+                }
+            }
+        }
+        
+        return sum ; 
+    }
+}
