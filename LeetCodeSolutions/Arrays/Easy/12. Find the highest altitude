@@ -1,0 +1,16 @@
+Question Link : https://leetcode.com/problems/find-the-highest-altitude/
+
+Solution : 
+class Solution {
+    public int largestAltitude(int[] gain) {
+        int[] alt = new int[gain.length + 1] ; 
+        int max = 0 ; //start altitude 
+        alt[0] = 0 ; //altitude at first is 0
+        
+        for(int i = 0 ; i < gain.length ; ++i){
+            alt[i+1] = alt[i] + gain[i] ; //here we will calculate the altitude based on before altitude and the gain value we use alt[i+1] as alt has an extra start element which is 0
+            max = Math.max(max,alt[i+1]) ; //get the max altitue comparing max and the current altitude computed
+        }
+        return max ; 
+    }
+}
