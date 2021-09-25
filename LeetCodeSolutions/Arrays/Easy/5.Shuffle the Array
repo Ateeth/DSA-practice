@@ -1,0 +1,23 @@
+Question Link : https://leetcode.com/problems/shuffle-the-array/
+
+Solution : 
+class Solution {
+    public int[] shuffle(int[] nums, int n) {
+        int[] ans = new int[nums.length] ; 
+        
+        //even spots in ans array
+        ans[0] = nums[0] ; 
+        for(int i = 1 ; i <= (nums.length-1)/2 ; i+=1){
+            ans[2*i] = nums[i] ; 
+        }
+        
+        //odd spots in ans array
+        for(int i = 1 ; i <= (nums.length-1)/2 ; i+=1){
+            ans[2*i-1] = nums[i+n-1] ; 
+        }
+        
+        //last element
+        ans[nums.length-1] = nums[nums.length-1];
+        return ans ; 
+    }
+}
