@@ -1,0 +1,54 @@
+Question link : https://leetcode.com/problems/two-sum/submissions/
+
+Solution : 
+class Solution {
+    
+    //find index of element
+    public int findIndex(int[] copy , int x){
+        for(int i = 0 ; i < copy.length ; ++i){
+            if(copy[i] == x){
+                copy[i] = -1 ; //very important as if both targets r same the indices returned are the same
+                return  i ;
+            }
+        }
+        return -1 ; 
+    }
+    
+    public int[] twoSum(int[] nums, int target) {
+        //copy array element into another arrya
+        int[] copy = new int[nums.length] ; 
+        for(int i = 0 ; i < nums.length ; ++i){
+            copy[i] = nums[i] ; 
+        }
+        
+        //sort one of the arrays
+        Arrays.sort(nums) ;
+        
+        int[] ans = new int[2] ; 
+        int start  = 0 , end = 0 ;  
+        int l = 0;
+        int r = nums.length - 1;
+        
+        //finding the 2 elements that add to target
+        while (l < r) {
+            if (nums[l] + nums[r] == target){
+                start = nums[l]; 
+                end = nums[r] ; 
+                break ; 
+            }
+            else if (nums[l] + nums[r] < target){
+                l++;
+            }
+            else{// nums[i] + nums[j] > sum
+                r--;
+            }
+        }
+       
+        //find index of the 2 elements in the copy array as it has orignal order not the changed one
+        ans[0] = findIndex(copy , start) ; 
+        ans[1] = findIndex(copy,end) ; 
+        
+        
+        return ans  ;
+    }
+}
