@@ -1,4 +1,4 @@
-Question Link : 
+Question Link : https://leetcode.com/problems/determine-whether-matrix-can-be-obtained-by-rotation/
 
 Note: Just transpose and reverse 4 times and each time the matrix is transposed and reversed compare with the target value
 
