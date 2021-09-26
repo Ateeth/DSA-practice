@@ -3,11 +3,32 @@ Question Link : https://leetcode.com/problems/reshape-the-matrix/
 Solution:
 class Solution {
     public int[][] matrixReshape(int[][] nums, int r, int c) {
-        int n = nums.length, m = nums[0].length;
-        if (r*c != n*m) return nums;
-        int[][] res = new int[r][c];
-        for (int i=0;i<r*c;i++) 
-            res[i/c][i%c] = nums[i/m][i%m];
-        return res;
-}
+        //get the number of rows and cols of orignal matrix 
+        int rows = nums.length ; 
+        int columns = nums[0].length ; 
+        
+        if(rows*columns != r*c){ //not compatible
+            return nums ; 
+        }
+        
+        int row_no = 0 ; 
+        int col_no = 0 ; 
+        
+        int[][] output = new int[r][c] ; 
+        
+        //traverse orignal array row wise and add elements by column in the output
+        //once all columns in row are filled go on to next row
+        for(int  i = 0 ; i < rows ; ++i){
+            for(int j = 0 ; j < columns ; ++j){
+                output[row_no][col_no] = nums[i][j] ; 
+                ++col_no ; //increment col_no
+                
+                if(col_no == c){//all cols in row r filled move onto next row
+                    ++row_no ; 
+                    col_no  = 0 ; 
+                }
+            }
+        }
+        return output ; 
+    }
 }
