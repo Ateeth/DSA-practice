@@ -1,0 +1,19 @@
+Question Link : https://leetcode.com/problems/maximum-subarray/submissions/
+
+NOTE : THIS IS A VERY IMPORTANT QN KADANES ALGORITHM IS USED
+
+Solution : 
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int sum =  nums[0] , maxsum = nums[0] ;
+        
+        for(int i = 1 ; i < nums.length ; ++i){
+            if(sum < 0){
+                sum = 0 ; 
+            }
+            sum += nums[i] ; 
+            maxsum = Math.max(maxsum , sum) ; 
+        }
+        return maxsum  ; 
+    }
+}
