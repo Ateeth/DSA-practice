@@ -1,0 +1,46 @@
+Question Link : 
+
+Note: Just transpose and reverse 4 times and each time the matrix is transposed and reversed compare with the target value
+
+Solution : 
+class Solution {
+    public boolean findRotation(int[][] mat, int[][] target) {
+        for(int i = 0; i < 4; i++){
+            transpose(mat);
+            reverse(mat);
+            if(check(mat,target)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean check(int[][] a,int[][] b){
+        for(int i = 0; i < a.length; i++){
+            for(int j = 0; j < b.length; j++){
+                if(a[i][j] != b[i][j]){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    // Image rotate code
+    public void transpose(int[][] a){
+        for(int i = 0; i < a.length; i++){
+            for(int j = i; j < a[0].length; j++){
+                int temp = a[i][j];
+                a[i][j] = a[j][i];
+                a[j][i] = temp;
+            }
+        }
+    }
+    public void reverse(int[][] a){
+        for(int i = 0; i < a[0].length/2; i++){
+            for(int j = 0; j < a.length; j++){
+                int temp = a[j][i];
+                a[j][i] = a[j][a[0].length - i - 1];
+                a[j][a[0].length - i - 1] = temp;
+            }
+        }
+    }
+}
