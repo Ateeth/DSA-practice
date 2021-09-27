@@ -1,0 +1,60 @@
+Question Link : https://leetcode.com/problems/product-of-array-except-self/
+
+NOTE: THE BELOW SOLUTION MANAGED TO PASS 18/20 test cases
+Solution(initial) : 
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        
+        //calculate all right products meaning product of elements to right of it
+        int[] RightProd = new int[nums.length] ; 
+        for(int i = 0 ; i < nums.length -1 ; ++i){
+            RightProd[i] = 1 ; 
+            for(int j = i+1 ; j < nums.length ; ++j){
+                RightProd[i] *= nums[j] ; 
+            }
+        }
+        RightProd[nums.length-1] = 1 ; //right product of last element is 1
+        
+        //calculate all left products meaning product of elements to right of it
+        int[] LeftProd = new int[nums.length] ; 
+        for(int i = nums.length-1 ; i > 0 ; --i){
+            LeftProd[i] = 1 ; 
+            for(int j = i-1 ; j >= 0 ; --j){
+                LeftProd[i] *= nums[j] ; 
+            }
+        }
+        LeftProd[0] = 1 ; //Left product of first element is 1
+        
+        int[] ans = new int[nums.length] ; 
+        for(int i = 0 ; i < nums.length ; ++i){
+            ans[i] = LeftProd[i] * RightProd[i] ; 
+        }
+        
+        return ans ; 
+        
+    }
+}
+
+
+OPTIMIZED SOLUTION THAT PASSES ALL TEST CASES
+public class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int[] res = new int[n];
+    
+        //first all the left products will be calculated for first element it is 1
+        res[0] = 1;
+        for (int i = 1; i < n; i++) {
+            res[i] = res[i - 1] * nums[i - 1]; //multiply previosu result * array element for cumulative product
+        }
+        
+        //now calculate the right products
+        int right = 1;
+        for (int i = n - 1; i >= 0; i--) { //start from end of array move left
+            //multiply result into right which will store cummulative product of elements at the right of current element
+            res[i] *= right;
+            right *= nums[i];
+        }
+        return res;
+    }
+}
