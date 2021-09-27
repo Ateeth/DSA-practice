@@ -1,0 +1,43 @@
+Question Link : https://leetcode.com/problems/spiral-matrix/submissions/
+
+Solution: 
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        ArrayList<Integer> ans = new ArrayList<>() ; 
+        
+        int rows = matrix.length ; 
+        int cols = matrix[0].length ; 
+        
+        int row_start = 0  , col_start = 0   , row_end = rows - 1 , col_end = cols - 1;
+        
+        while(row_start <= row_end && col_start <= col_end){
+            //traverse row
+            for(int i = col_start ; i <= col_end ; ++i){
+                ans.add(matrix[row_start][i]) ; 
+            }
+            ++row_start ; //entire row is travesed move to next row
+            
+            //traverse last column
+            for(int i = row_start ; i <= row_end ; ++i){
+                ans.add(matrix[i][col_end]) ; 
+            }
+            --col_end ; //last column is traversed move left
+            
+            if(row_start <= row_end && col_start <= col_end){ // just a check else unnecessary elements
+                //traverse last row
+                for(int i = col_end ; i >= col_start ; --i){
+                    ans.add(matrix[row_end][i]) ; 
+                }
+                --row_end ; //decrement last row value
+                
+                //traverse first column
+                for(int i = row_end ; i >= row_start ; --i){
+                    ans.add(matrix[i][col_start]) ; 
+                }
+                ++col_start ; 
+            }
+        }
+        
+        return ans ; 
+    }
+}
