@@ -1,0 +1,35 @@
+Question Link : https://leetcode.com/problems/set-matrix-zeroes/submissions/
+
+Solution : 
+public class Solution {
+    public void setZeroes(int[][] matrix) {
+        boolean fr = false,fc = false; //fr and fc are to say if first row or first column contain a 0
+        for(int i = 0; i < matrix.length; i++) {
+            for(int j = 0; j < matrix[0].length; j++) {
+                if(matrix[i][j] == 0) {
+                    if(i == 0) fr = true; //first row has a 0 prior
+                    if(j == 0) fc = true; //first col has a 0 prior
+                    matrix[0][j] = 0; //make first element of the column 0
+                    matrix[i][0] = 0; //make first element of row 0
+                }
+            }
+        }
+    for(int i = 1; i < matrix.length; i++) {
+        for(int j = 1; j < matrix[0].length; j++) {
+            if(matrix[i][0] == 0 || matrix[0][j] == 0) { //if first element of row/column is 0 make entire row ,column 0
+                matrix[i][j] = 0;
+            }
+        }
+    }
+    if(fr) { //if before itself 1st row had a 0 this makes column full 0
+        for(int j = 0; j < matrix[0].length; j++) {
+            matrix[0][j] = 0;
+        }
+    }
+    if(fc) { //if before itself 1st column had a 0 this makes row full 0
+        for(int i = 0; i < matrix.length; i++) {
+            matrix[i][0] = 0;
+        }
+    }
+}
+}
