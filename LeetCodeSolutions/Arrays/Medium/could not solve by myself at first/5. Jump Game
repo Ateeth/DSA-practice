@@ -1,0 +1,18 @@
+Question Link : https://leetcode.com/problems/jump-game/
+
+Solution: 
+class Solution {
+    public boolean canJump(int[] nums) {
+    // in this problem traverse the array from last and see if u can get to beginning position
+        int lastGoodIndex = nums.length - 1 ;
+        
+        for(int i = nums.length-1 ; i >= 0 ; --i){
+            if(i + nums[i] >= lastGoodIndex){ //see if u can reach good index from i or not
+                lastGoodIndex  = i ; 
+            }
+        }
+        
+        return lastGoodIndex == 0 ; //if not equal to 0 we could not freach from first postion
+        
+    }
+}
