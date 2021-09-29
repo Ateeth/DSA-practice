@@ -1,0 +1,39 @@
+Question Link : https://leetcode.com/problems/arranging-coins/
+
+Approach 1  :Note that this approach was what i thought first iteratively but in large numbers it may exceed time limits
+Solution : 
+class Solution {
+    public int arrangeCoins(int n) {
+        int ctr = 0 ;
+        if(n == 1){
+            return 1 ; 
+        }
+        while( (n -ctr) > 0){
+            ++ctr ;  
+            n -= ctr ; 
+        }
+        return ctr ; 
+    }
+}
+
+Approach 2 :More optimal approach using binary search
+Solution: 
+class Solution {
+  public int arrangeCoins(int n) {
+    long left = 0, right = n;
+    long mid, currSum;
+    while (left <= right) { //find that number between 0 and n 
+      mid = left + (right - left) / 2; //mid value in the range
+      currSum = mid * (mid + 1) / 2; //sum till that k number can be given k*(k+1)/2
+
+      if (currSum == n) return (int)mid; //return the mid value if sum == n
+
+      if (n < currSum) {//Sum till mid value of range is greater than n so move end pointer to mid-1 
+        right = mid - 1;
+      } else { //sum till mid value of range is lesser than n so move start index to mid+1
+        left = mid + 1;
+      }
+    }
+    return (int)right; //return mid-1 value as no such sum till elements == n if return mid-1 it is element till which sum < n
+  }
+}
