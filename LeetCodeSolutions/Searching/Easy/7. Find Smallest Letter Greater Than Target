@@ -1,0 +1,21 @@
+Question Link : https://leetcode.com/problems/find-smallest-letter-greater-than-target/
+
+Solution : 
+class Solution {
+    public char nextGreatestLetter(char[] letters, char target) {
+        
+        int start = 0 , end = letters.length -1 ; 
+        while(start <= end){
+            int mid = start + (end-start) /2 ; 
+            if(letters[mid] > target){
+                end = mid - 1  ; 
+            }else{
+                start = mid + 1 ; 
+            }
+        }
+        
+        //start < end in this case so start index holds the letter lesser than target
+        //%letters.length as it is a wrap arround class if target is z wrap around array return 'a'
+        return letters[start %letters.length] ; 
+    }
+}
