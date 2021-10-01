@@ -1,0 +1,98 @@
+Question link : https://leetcode.com/problems/intersection-of-two-arrays-ii/
+
+Solution 1 : Using 2 pointer approach
+class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+    Arrays.sort(nums1);
+    Arrays.sort(nums2);
+    int p1 = 0, p2 = 0, count = 0;
+    boolean first = true;
+    int[] tmp = new int[nums1.length >= nums2.length ? nums1.length : nums2.length], res;
+    
+    while(p1 < nums1.length && p2 < nums2.length) {
+        if(nums1[p1] == nums2[p2]) {
+            tmp[count++] = nums1[p1];
+            p1++;
+            p2++;    
+        } else if(nums1[p1] < nums2[p2]) {
+            p1++;
+        } else {
+            p2++;
+        }
+    }
+    
+    //we cant return temp as it has unnecessary 0s therefore only count number of elements must be returned
+    res = new int[count];
+    for(int i=0; i<count; i++) res[i] = tmp[i];
+    return res;
+
+    }
+}
+
+Solution 2 : using binary search 
+class Solution {
+    private int binarySearch(int[] arr, int target) {
+        int start = 0;
+        int end = arr.length-1;
+        int  mid = -1;
+        while(start<=end) {
+            mid = start + (end-start)/2;
+            if (arr[mid] > target) {
+                end = mid-1;
+            } else if (arr[mid] < target) {
+                start = mid+1;
+            } else {
+                if (mid == arr.length-1 || (arr[mid]==target && arr[mid+1]>target))
+                    return mid;
+                else {
+                    //return the largest idx such that arr[idx]==target
+                    start++;
+                    end = mid+1;
+                }
+            }
+        }
+        return -1;
+    }
+    
+    public int[] intersect(int[] nums1, int[] nums2) {
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        
+        int len1 = nums1.length;
+        int len2 = nums2.length;
+        
+        int[] longer;
+        int[] shorter;
+        
+        if (len1>len2) {
+            longer = nums1;
+            shorter = nums2;
+        } else {
+            longer = nums2;
+            shorter = nums1;
+        }
+        
+        System.out.println();
+        boolean []taken = new boolean[longer.length];
+        List<Integer> intersection = new ArrayList<Integer>();
+        for (int i=0; i<shorter.length; i++) {
+            //last index of given number in larger
+            int idx = binarySearch(longer, shorter[i]);
+            if(idx==-1)continue;
+            
+            //find if element at returned idx has already been included
+            //if yes, find previous ele that we can include
+            while (idx>=0 && taken[idx] && longer[idx]==shorter[i])
+                idx--;
+            if (idx>-1 && longer[idx]==shorter[i]){
+                taken[idx] = true;
+                intersection.add(longer[idx]);
+            }
+        }
+        int [] interArr = new int[intersection.size()];
+        for (int i=0; i<intersection.size(); i++) {
+            interArr[i] = intersection.get(i);
+        }
+        return interArr;
+    }
+}
