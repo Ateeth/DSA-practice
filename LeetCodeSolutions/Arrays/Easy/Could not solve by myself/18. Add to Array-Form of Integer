@@ -1,0 +1,72 @@
+Question Link : https://leetcode.com/problems/add-to-array-form-of-integer/
+NOTE : 
+x+=k has garbage value too mcuh for integer space
+Solution:
+class Solution {
+    public List<Integer> addToArrayForm(int[] num, int k) {
+        int x = 0  ; 
+        for(int i = 0  ; i < num.length ; ++i){
+              x = x*10 + num[i]  ; 
+        } 
+    
+        x += k ;  
+        ArrayList<Integer> ans = new ArrayList<>(num.length) ; 
+        while(x > 0){
+            int dig = x % 10 ; 
+            ans.add(dig) ; 
+            x /= 10 ; 
+        }
+        
+        Collections.reverse(ans) ; //to reverse arrayList
+        
+        return ans ; 
+    }
+}
+
+Accepted solution : 
+
+COMPLEXITY:
+
+Time: O(max(N, log10(K))), where N is the length of the array and log10(K) is the number of digits
+Space: O(1), in-place
+BASIC IDEA:
+Basic Idea behind this implementation is to add the num array element one by one with the k
+eg:
+num[] = {1, 2, 3} and k = 45;
+
+1st Iteration:
+k += num[len--] --> k = k + num[2] --> k = 45 + 3 --> k = 48
+list.addFirst(k % 10) --> list.addFirst(48 % 10) --> list.addFirst(8) --> [8]
+k /= 10 --> k = k / 10 --> 48 / 10 --> k = 4
+
+2nd Iteration:
+k += num[len--] --> k = k + num[1] --> k = 4 + 2 --> k = 6
+list.addFirst(k % 10) --> list.addFirst(6 % 10) --> list.addFirst(6) --> [6, 8]
+k /= 10 --> k = k / 10 --> 6 / 10 --> k = 0
+
+3rd Iteration:
+k += num[len--] --> k = k + num[0] --> k = 0 + 1 --> k = 1
+list.addFirst(k % 10) --> list.addFirst(1 % 10) --> list.addFirst(1) --> [1, 6, 8] <--- Desired Output
+k /= 10 --> k = k / 10 --> 1 / 10 --> k = 0
+
+Here, the loop will be executed 3 times as (length of num) > (number of digits in k) i.e. O(max(N, log10(K))), where N is the length of the array and log10(K) is the number of digits
+
+Solution : 
+class Solution {
+    public List<Integer> addToArrayForm(int[] num, int k) {
+        ArrayList<Integer> ans = new ArrayList<>() ; 
+        int len = num.length - 1 ; 
+        
+        while(len >= 0 || k!=0){ //start from the last index of the array
+            if(len >= 0){
+                k += num[len] ; //add k to the index len
+                --len ; //go to the left index of array for next iteration
+            }           
+            ans.add(k%10) ; //add the units digit of k to the answer
+            k /= 10 ; //divide k by 10 for the next iteration
+        }
+        Collections.reverse(ans) ; //reverse as we r storing the elements in the arrayList in the reverse order 
+        return ans ; 
+    }
+}
+
