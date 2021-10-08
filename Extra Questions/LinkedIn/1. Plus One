@@ -1,0 +1,21 @@
+Question Link : https://leetcode.com/problems/plus-one/
+
+My solution : 
+class Solution {
+    public int[] plusOne(int[] digits) {
+        int n = digits.length;
+        for(int i=n-1; i>=0; i--){ //if the digit is less than 9 just add 1 to it and return  
+            if(digits[i] < 9) {
+                digits[i]++;
+                return digits;
+            }
+        
+            digits[i] = 0; //if last didigt is 9 make it 0 and carry on
+        }
+    
+        int[] newNumber = new int [n+1]; //if all digits are 9 then make all 0 and the first number as a 1
+        newNumber[0] = 1;
+    
+        return newNumber;
+    }
+}
