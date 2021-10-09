@@ -1,0 +1,31 @@
+Question Link : https://leetcode.com/problems/single-element-in-a-sorted-array/
+
+Solution : 
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+	    if(nums.length <= 2){
+		    return nums[0];
+	    }
+	    int low = 0;
+	    int high = nums.length - 1;
+	    int mid;
+	    while(low <= high){
+		    mid = low + (high - low) /2;
+		//Check to see if single element is in the middle
+		    if(mid > 0 && mid < nums.length - 1 && nums[mid] != nums[mid - 1] && nums[mid] != nums[mid + 1]){
+			    return nums[mid];
+		    }
+		    //This check's if the array on then left part, till the mid has first occurence of the pair in even index position
+		    //Because once the single element comes the first occurrence of the pair will always be in  odd index position
+		    //In that case we have to search for the element on the right part of the array
+		    else if((mid > 0 && nums[mid] == nums[mid - 1] && (mid - 1) % 2 == 0) || ( mid < nums.length - 1 && nums[mid] ==                        nums[mid + 1] && (mid + 1) % 2 != 0)){
+			    low = mid + 1;
+		    }
+		    else{
+			    high = mid - 1;
+		    }
+	    }
+
+	    return nums[low];
+    }
+}
