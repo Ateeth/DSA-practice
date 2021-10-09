@@ -1,0 +1,38 @@
+Question Link : https://leetcode.com/problems/check-if-n-and-its-double-exist/
+
+Solution : 
+class Solution {
+    public boolean checkIfExist(int[] arr) {
+        Arrays.sort(arr);
+        int i = 0;
+        while (i < arr.length) {
+            if(arr[i] % 2 == 0 && bs(arr, arr[i]/2, i)) //arr[i] is and even number and we search for its half and we pass index to verify 
+                return true;
+            else if(bs(arr, arr[i]*2, i)) //arr[i] is odd and we search for its double
+                return true;
+            i++;
+        }
+        return false;
+    }
+    
+    
+    boolean binarySearch (int[] arr,int element,int index){
+        
+        int start = 0;
+        int end = arr.length - 1;
+        
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            
+            if(arr[mid] == element && mid != index)
+                return true;
+            if(arr[mid] < element)
+                start = mid + 1;
+            else
+                end = mid - 1;
+                
+        }
+        
+        return false;
+    }
+}
