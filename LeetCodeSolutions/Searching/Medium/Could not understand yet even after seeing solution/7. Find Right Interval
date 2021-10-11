@@ -1,0 +1,118 @@
+Question Link : https://leetcode.com/problems/find-right-interval/
+Solution 1 - Brute Force
+For each interval search through the entire array to find the next interval that is greater than end value of the current interval
+
+class Solution {
+    public int[] findRightInterval(int[][] intervals) {
+        int[] result = new int[intervals.length];
+        for(int i=0; i<intervals.length; i++)
+            result[i] = search(intervals[i][1], intervals);
+        return result;
+    }
+    
+    private int search(int num, int[][] intervals){
+        int idx = -1;
+        int min = Integer.MAX_VALUE;
+        for(int i=0; i< intervals.length; i++){
+            if(intervals[i][0] >= num && intervals[i][0] < min){
+                idx = i;
+                min = intervals[i][0];
+            }
+        }
+        return idx;
+    }
+}
+Solution 2 - Using TreeMap
+Store all the start times and the corresponding indices of all the intervals in a TreeMap. TreeMap internally sorts the keys. Then iterate through each interval in intervals[][] and look up in TreeMap for the next ceiling entry greater than equal to the current interval end time.
+
+class Solution {
+    public int[] findRightInterval(int[][] intervals) {
+        TreeMap<Integer, Integer> startSortedMap = new TreeMap<>();
+        int i=0;
+        for(int[] interval: intervals)
+            startSortedMap.put(interval[0], i++);
+        
+        int[] result = new int[intervals.length];
+        for(i=0; i<intervals.length; i++){
+            Map.Entry<Integer, Integer> entry = startSortedMap.ceilingEntry(intervals[i][1]);
+            result[i] = entry != null ? entry.getValue() : -1;
+        }    
+        return result;
+    }    
+}
+Solution 3 - Binary Search
+Store all the interval start times and the corresponding indices in a HashMap. Then sort intervals[][] based on start time. Then iterate through each entry in the sorted array and perform binary search of the current item's end time on the start times of the sorted array.
+
+class Solution {
+    public int[] findRightInterval(int[][] intervals) {
+        Map<Integer, Integer> indexMap = new HashMap<>();
+        int i=0;
+        for(int[] interval: intervals)
+            indexMap.put(interval[0], i++);
+        
+        Arrays.sort(intervals, (a,b) -> Integer.compare(a[0], b[0]));
+        int[] result = new int[intervals.length];
+        for(i=0; i<intervals.length; i++)
+            result[indexMap.get(intervals[i][0])] = indexMap.getOrDefault(search(intervals, intervals[i][1]), -1);
+        return result;
+    }
+    
+    private Integer search(int[][] intervals, int num){
+        int lo=0, hi=intervals.length-1;
+        if (num > intervals[hi][0]) return null;
+        
+        while(lo <= hi){
+            int mid = lo + (hi - lo) / 2;
+            if(num == intervals[mid][0]) 
+                return intervals[mid][0];
+            if (num > intervals[mid][0])
+                lo = mid + 1;
+            else hi = mid - 1;
+        }
+        return intervals[lo][0];
+    }
+}
+
+Solution 4 : Anoteher binary search
+
+class Solution {
+    //O(N*logN)time
+//O(N)space
+public int[] findRightInterval(int[][] intervals) {
+    int n = intervals.length;
+    int[] res = new int[n];
+	//because the start value is unique, save s and index in map
+    HashMap<Integer, Integer> map = new HashMap<>();
+	//save the start
+    int[] s = new int[n];
+    for (int i = 0; i < n; i++) {
+        s[i] = intervals[i][0];
+        map.put(s[i], i);
+    }
+	//sort the start arr
+    Arrays.sort(s);
+    for (int i = 0; i < n; i++) {
+        res[i] = binarySearch(s, map, intervals[i][1]);
+    }
+    return res;
+}
+
+//binarysearch to get the first one who largger than v, and return the index in map
+int binarySearch(int[] s, HashMap<Integer, Integer> map, int v) {
+    if (v <= s[0]) {
+        return map.get(s[0]);
+    } else if (v > s[s.length - 1]) {
+        return -1;
+    }
+    int l = 0, r = s.length;
+    while (l < r) {
+        int mid = (l + r) >>> 1;
+        if (s[mid] >= v) {
+            r = mid;
+        } else {
+            l = mid + 1;
+        }
+    }
+    return map.get(s[l]);
+}
+}
