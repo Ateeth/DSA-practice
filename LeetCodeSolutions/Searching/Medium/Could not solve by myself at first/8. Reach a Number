@@ -1,3 +1,5 @@
+Question Link : https://leetcode.com/problems/reach-a-number/
+
 Step 0: Get positive target value (step to get negative target is the same as to get positive value due to symmetry).
 Step 1: Find the smallest step that the summation from 1 to step just exceeds or equalstarget.
 Step 2: Find the difference between sum and target. The goal is to get rid of the difference to reach target.
