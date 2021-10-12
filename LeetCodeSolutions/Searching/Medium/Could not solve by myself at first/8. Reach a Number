@@ -7,6 +7,7 @@ For ith move, if we switch the right move to the left, the change in summation w
 Now the difference between sum and target has to be an even number in order for the math to check out.
 
 Step 2.1: If the difference value is even, we can return the current step.
+//if the target is surpassed add steps till we can subtract 2k steps to subtract that makes us reach the target
 Step 2.2: If the difference value is odd, we need to increase the step until the difference is even (at most 2 more steps needed).
 Eg:
 target = 5
@@ -26,7 +27,7 @@ class Solution {
             step++;
             sum += step;
         }
-        while ((sum - target) % 2 != 0) {
+        while ((sum - target) % 2 != 0) { 
             step++;
             sum += step;
         }
