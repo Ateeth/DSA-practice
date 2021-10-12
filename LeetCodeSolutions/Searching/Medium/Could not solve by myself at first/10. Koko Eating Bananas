@@ -1,0 +1,23 @@
+Question Link : https://leetcode.com/problems/koko-eating-bananas/
+
+Solution : 
+class Solution {
+    public int minEatingSpeed(int[] piles, int H) {
+        int l = 1, r = 1000000000; //r is 10^9
+        while (l < r) {
+            int m = (l + r) / 2, total = 0;
+            for (int p : piles){
+                total += p/m ; // this is pile value/ mid val i.e m is the assumed speed
+                int rem = p % m ; // if any bananas are left in the pile after that hour
+                if(rem > 0){ //some bananas are left in the pile so it will take one hour extra and so ++total
+                    ++total ; 
+                }
+            }
+            if (total > H) //increase the speed by making start greater than mid
+                l = m + 1;
+            else
+                r = m; 
+        }
+        return l; //l will be the minimum speed
+    }
+}
