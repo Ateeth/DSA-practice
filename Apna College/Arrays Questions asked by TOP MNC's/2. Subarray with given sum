@@ -1,0 +1,42 @@
+Question Link : https://practice.geeksforgeeks.org/problems/subarray-with-given-sum-1587115621/1
+
+Solution : 
+class Solution
+{
+    //Function to find a continuous sub-array which adds up to a given number.
+    static ArrayList<Integer> subarraySum(int[] arr, int n, int s) 
+    {
+        ArrayList<Integer> ans = new ArrayList<>() ; 
+        
+        int i = 0 , j = 0 ,sum = 0 ; 
+        while( j < n && sum + arr[j] <= s ){
+            sum += arr[j] ; 
+            ++j ; 
+        }
+        
+        if( sum == s ){
+            ans.add(i + 1)  ; //1 based index expected 
+            ans.add(j) ;  //we have gone one extra j ahead so its value will be 1 based indexing based
+            return ans ; 
+        }
+        
+        while(j < n){
+            sum += arr[j] ; //as we have moved j forward we have to add it to sum
+            while(sum > s){
+                sum -= arr[i] ; 
+                ++i ; //move the i pointer front
+            }
+            
+            if(sum == s){
+                ans.add(i + 1) ; 
+                ans.add(j + 1) ; 
+                return ans ; 
+            }
+            
+            ++j  ; 
+        }
+        
+        ans.add(-1) ; 
+        return ans; 
+    }
+}
