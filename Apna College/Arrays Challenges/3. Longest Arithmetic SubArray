@@ -1,0 +1,39 @@
+Question Link : https://www.geeksforgeeks.org/longest-subarray-forming-an-arithmetic-progression-ap/
+
+Solution :
+package arrayChallenges;
+
+import java.util.* ; 
+public class LongestArithmeticSubarray {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in) ; 
+		System.out.println("Enter number of elements in the array :");
+		int n = sc.nextInt() ; 
+		System.out.println("Enter the elements of the array one by one :");
+		int[] arr = new int[n] ; 
+		for(int i = 0 ; i < n ; ++i) {
+			arr[i] = sc.nextInt(); 
+		}
+		
+		int diff = arr[1] - arr[0] ;
+		int prevDiff = arr[1] - arr[0] ;
+		int i ; 
+		int length = 2  , maxLength = 2; 
+		for( i = 1 ; i < n - 1 ; ++i) {
+			diff = arr[i+1] - arr[i] ; 
+			if( diff == prevDiff ) {
+				++length ; 
+			}else {
+				length = 2 ; 
+				prevDiff = diff ; 
+			}
+			maxLength = Math.max(maxLength, length) ; 
+		}
+		
+		System.out.println("Length of longest arithmetic subarray is : " + maxLength) ; 
+		sc.close(); 		
+
+	}
+
+}
