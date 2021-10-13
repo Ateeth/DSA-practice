@@ -1,0 +1,69 @@
+Question Link : https://www.geeksforgeeks.org/find-first-repeating-element-array-integers/
+
+Solution : 
+// { Driver Code Starts
+// Initial Template for Java
+
+import java.io.*;
+import java.util.*;
+class GFG {
+    public static void main(String[] args) {
+
+        // Taking input using class Scanner
+        Scanner sc = new Scanner(System.in);
+
+        // Taking total count of testcases
+        int t = sc.nextInt();
+
+        while (t-- > 0) {
+            // taking total count of elements
+            int n = sc.nextInt();
+
+            // creating a new array of size n
+            int arr[] = new int[n];
+
+            // inserting elements to the array
+            for (int i = 0; i < n; i++) {
+                arr[i] = sc.nextInt();
+            }
+            Solution ob = new Solution();
+            // calling firstRepeated method
+            // and printing the result
+            System.out.println(ob.firstRepeated(arr, n));
+        }
+    }
+}// } Driver Code Ends
+
+
+// User function Template for Java
+
+class Solution {
+    // Function to return the position of the first repeating element.
+    public static int firstRepeated(int[] arr, int n) { 
+        int len = arr[0]; 
+        
+        for(int i = 0 ; i < n ; ++i){
+            len = Math.max(len , arr[i]) ; 
+        }
+       
+        
+        int[] freq = new int[len+1] ; 
+        for(int i = 0 ; i < freq.length ; ++i){
+            freq[i] = -1 ; 
+        }
+        
+        int minIDX = Integer.MAX_VALUE ; 
+        for(int i = 0 ; i < n ; ++i){
+            if(freq[arr[i]] == -1){ //first occurence
+                freq[arr[i]] = i ; 
+            }else{
+                minIDX = Math.min(minIDX ,freq[arr[i]]) ; 
+            }
+        }
+        
+        if( minIDX == Integer.MAX_VALUE){
+            return -1 ; 
+        }
+        return minIDX + 1 ;//as answer has 1 index array 
+    }
+}
