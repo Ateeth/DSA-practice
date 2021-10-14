@@ -1,0 +1,36 @@
+Question Link : https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/
+
+Soltuion : 
+class Solution {
+    public int shipWithinDays(int[] weights, int days) {
+        int left = 0 , right = 0 ; 
+        for(int w : weights){
+            left = Math.max(left , w) ; 
+            right += w ; 
+        }
+        
+        // left is max weight
+        // right is sum of weights
+        while(left < right){
+            // we will find capacity by trial and error starting from max weigth
+             int sum = 0  , neededDays = 1 ; //needDed days is number of days needed with current capacity
+             int mid = left + ( right - left ) / 2 ; //mid value
+             for( int w : weights ){ //go through all the weights
+                 if( sum + w > mid ){ //if capacity exceeded for current day
+                     sum = 0 ; //reset sum to 0
+                     neededDays += 1 ; //increase number of days needed by one will continue from next day
+                 }
+                 sum += w ; //add the weights to the sum of weights of current day
+             }
+            
+             if ( neededDays > days ){ //we must increase the capacity as number of days needed is more than given threshold
+                 left = mid + 1  ; //so increase capacity by mid + 1  
+             }else{
+                 right = mid ; //we make end value to mid 
+             }
+        }
+        
+        return left ; //left will have the capacity now
+    }
+}
+
